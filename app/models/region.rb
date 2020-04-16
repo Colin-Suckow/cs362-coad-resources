@@ -14,4 +14,5 @@ class Region < ApplicationRecord
     name
   end
 
+
 end
