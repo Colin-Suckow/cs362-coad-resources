@@ -31,13 +31,9 @@ RSpec.describe Ticket, type: :model do
     it { should_not allow_value("not a phone number").for :phone }
   end
 
-  describe "scope" do
-    # todo
-  end
-
   describe "#open?" do
     it "should be open when it is not closed" do
-      expect(ticket).to_not eq ticket.closed
+      expect(ticket.open?).to_not eq ticket.closed
     end
   end
 
