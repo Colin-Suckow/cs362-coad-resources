@@ -17,7 +17,9 @@ RSpec.describe Ticket, type: :model do
   end
 
   describe "associations" do 
-    #todo
+    it { should belong_to :region }    
+    it { should belong_to :resource_category }
+    it { should belong_to :organization } #todo: look into optional test
   end
 
   describe "validations" do 
