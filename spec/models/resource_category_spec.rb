@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe ResourceCategory, type: :model do
+  let(:resource_category) { ResourceCategory.new }
+
   describe "attributes" do
     it { should respond_to :name }
     it { should respond_to :active }
@@ -17,34 +19,49 @@ RSpec.describe ResourceCategory, type: :model do
     it { should have_and_belong_to_many :organizations }
   end
 
-  describe "methods" do
-    let(:resource_category) {ResourceCategory.new}
+  describe "::unspecified" do
+    it "creates a ResourceCategory with name 'Unspecified' if non exist" do
+      expect(ResourceCategory.where(name: "Unspecified")).to be_empty
+      expect { ResourceCategory.unspecified }.to change { ResourceCategory.count }.by 1
+    end
 
+    it "dosen't create a new ResourceCategory if a ResourceCategory exists with name 'Unspecified'" do
+      ResourceCategory.create(name: "Unspecified")
+      expect { ResourceCategory.unspecified }.to_not change { ResourceCategory.count }
+    end
+
+    it "returns a ResourceCategory with the name 'Unspecified'" do
+      expect(ResourceCategory.unspecified.to_s).to eq "Unspecified"
+    end
+  end
+
+  describe "#activate" do
     it "can activate" do
-        category = ResourceCategory.new
-        category.activate
-        expect(category.active).to be_truthy
+      category = ResourceCategory.new
+      category.activate
+      expect(category.active).to be_truthy
     end
+  end
 
+  describe "#deactivate" do
     it "can deactivate" do
-        category = ResourceCategory.new
-        category.deactivate
-        expect(category.active).to be_falsey
+      category = ResourceCategory.new
+      category.deactivate
+      expect(category.active).to be_falsey
+    end
+  end
+
+  describe "#inactive?" do
+    it "returns false if active" do
+      category = resource_category
+      category.activate
+      expect(category.inactive?).to be_falsey
     end
 
-    it "determines inactivity" do
-        category = resource_category
-        category.activate
-        expect(category.inactive?).to be_falsey
-        category.deactivate
-        expect(category.inactive?).to be_truthy
+    it "returns true if inactive" do
+      category = resource_category
+      category.deactivate
+      expect(category.inactive?).to be_truthy
     end
-
-    it "has a string representation" do
-        category = resource_category
-        category.name = "test"
-        expect(category.name).to eq("test")
-    end
-
   end
 end
