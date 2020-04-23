@@ -66,5 +66,8 @@ RSpec.describe Organization, type: :model do
   end
 
   describe "#to_s" do
+    it "will return its name" do
+      expect(organization.to_s).to eq organization.name
+    end
   end
 end
