@@ -43,7 +43,14 @@ RSpec.describe Ticket, type: :model do
   end
 
   describe "#captured?" do
-    # todo
+    it "should not be captured when it doesn't belong to an orginzation" do 
+      expect(ticket.captured?).to be_falsy
+    end
+
+    it "should be captured when it belongs to an orginzation" do 
+      Organization.new.tickets = [ticket]
+      expect(ticket.captured?).to be_truthy
+    end
   end
 
   describe "#to_s" do
