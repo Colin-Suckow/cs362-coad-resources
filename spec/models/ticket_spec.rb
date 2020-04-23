@@ -54,6 +54,8 @@ RSpec.describe Ticket, type: :model do
   end
 
   describe "#to_s" do
-    # tod
+    it "should return a string of the word ticket and its id" do
+      expect(ticket.to_s).to eq "Ticket #{ticket.id}"
+    end
   end
 end
