@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe ResourceCategory, type: :model do
-  let(:resource_category) { ResourceCategory.new }
+  let(:resource_category) { ResourceCategory.new(name: "FAKE") }
 
   describe "attributes" do
     it { should respond_to :name }
@@ -62,6 +62,16 @@ RSpec.describe ResourceCategory, type: :model do
       category = resource_category
       category.deactivate
       expect(category.inactive?).to be_truthy
+    end
+  end
+
+  describe "#to_s" do
+    it "returns a string" do
+      expect(resource_category.to_s).to be_instance_of String
+    end
+
+    it "returns its name" do
+      expect(resource_category.to_s).to eq "FAKE"
     end
   end
 end

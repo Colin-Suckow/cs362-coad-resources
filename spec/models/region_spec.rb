@@ -1,8 +1,7 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Region, type: :model do
-    
-  let(:region) { Region.new(name: "FAKE")}
+  let(:region) { Region.new(name: "FAKE") }
 
   describe "attributes" do 
     it { should respond_to :name }
@@ -19,33 +18,24 @@ RSpec.describe Region, type: :model do
   end
 
   describe "#to_s" do
-
-    it "returns a string" do 
+    it "returns a string" do
       expect(region.to_s).to be_instance_of String
     end
-
-    it "returns its name" do 
-      expect(region.to_s).to eq "FAKE"
-    end
-
   end
 
-  describe "::unspecified" do 
-
+  describe "::unspecified" do
     it "creates a Region with name 'Unspecified' if non exist" do
-      expect(Region.where(name: 'Unspecified')).to be_empty
-      expect{ Region.unspecified }.to change { Region.count }.by 1
+      expect(Region.where(name: "Unspecified")).to be_empty
+      expect { Region.unspecified }.to change { Region.count }.by 1
     end
 
     it "dosen't create a new Region if a Region exists with name 'Unspecified'" do
-      Region.create(name:'Unspecified')
-      expect{ Region.unspecified }.to_not change { Region.count }
+      Region.create(name: "Unspecified")
+      expect { Region.unspecified }.to_not change { Region.count }
     end
 
-    it "returns a Region with the name 'Unspecified'" do 
-      expect(Region.unspecified.to_s).to eq 'Unspecified'
+    it "returns a Region with the name 'Unspecified'" do
+      expect(Region.unspecified.to_s).to eq "Unspecified"
     end
-
   end
-
 end
