@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.describe Ticket, type: :model do
-  
   let(:ticket) { Ticket.new() }
 
   describe "attributes" do
@@ -28,7 +27,7 @@ RSpec.describe Ticket, type: :model do
     it { should validate_presence_of :resource_category_id }
     it { should validate_length_of(:name).is_at_least(1).is_at_most(255).on(:create) }
     it { should validate_length_of(:description).is_at_most(1020).on(:create) }
-    it { should allow_value("+61 412 345 678").for :phone}
+    it { should allow_value("+61 412 345 678").for :phone }
     it { should_not allow_value("not a phone number").for :phone }
   end
 
@@ -38,16 +37,16 @@ RSpec.describe Ticket, type: :model do
 
   describe "#open?" do
     it "should be open when it is not closed" do
-      expect(ticket).to_not eq ticket.closed 
+      expect(ticket).to_not eq ticket.closed
     end
   end
 
   describe "#captured?" do
-    it "should not be captured when it doesn't belong to an orginzation" do 
+    it "should not be captured when it doesn't belong to an orginzation" do
       expect(ticket.captured?).to be_falsy
     end
 
-    it "should be captured when it belongs to an orginzation" do 
+    it "should be captured when it belongs to an orginzation" do
       Organization.new.tickets = [ticket]
       expect(ticket.captured?).to be_truthy
     end
