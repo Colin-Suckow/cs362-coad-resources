@@ -32,5 +32,13 @@ RSpec.describe Region, type: :model do
 
   end
 
+  describe "validations" do 
+
+    it "validates presence of name" do
+      expect(region).to validate_presence_of :name
+    end
+
+  end
+
 
 end
