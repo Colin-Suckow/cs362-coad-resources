@@ -10,7 +10,7 @@ RSpec.describe Region, type: :model do
     end
 
     it "can have a name" do 
-        expect(Region.new).to respond_to :name
+        expect(Region).to respond_to :name
     end
 
     it "can be converted to a string" do 
