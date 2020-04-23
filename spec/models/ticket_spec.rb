@@ -1,6 +1,9 @@
 require "rails_helper"
 
 RSpec.describe Ticket, type: :model do
+  
+  let(:ticket) { Ticket.new() }
+
   describe "attributes" do
     it { should respond_to :name }
     it { should respond_to :description }
@@ -34,7 +37,9 @@ RSpec.describe Ticket, type: :model do
   end
 
   describe "#open?" do
-    #todo
+    it "should be open when it is not closed" do
+      expect(ticket).to_not eq ticket.closed 
+    end
   end
 
   describe "#captured?" do
