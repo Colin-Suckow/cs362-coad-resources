@@ -2,9 +2,12 @@ require 'rails_helper'
 
 RSpec.describe ResourceCategory, type: :model do
 
-    specify {is_expected.to respond_to(:name)}
-    specify {is_expected.to respond_to(:created_at)}
-    specify {is_expected.to respond_to(:updated_at)}
-    specify {is_expected.to respond_to(:active)}
+    it "can have a name" do
+        expect(ResourceCategory).to respond_to :name
+    end
+
+    it "can be active" do
+        expect(ResourceCategory).to respond_to :active
+    end
 
 end
