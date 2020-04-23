@@ -1,7 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Organization, type: :model do
-  
   describe "attributes" do
     it { should respond_to :name }
     it { should respond_to :status }
@@ -18,27 +17,23 @@ RSpec.describe Organization, type: :model do
   end
 
   describe "associations" do
-
+    it { should have_many :tickets }
+    it { should have_many :users }
+    it { should have_and_belong_to_many :resource_categories }
   end
 
   describe "validations" do
-  
   end
 
-  describe "#approve" do 
-
+  describe "#approve" do
   end
 
   describe "#reject" do
-
   end
 
-  describe "#set_default_status" do 
-
+  describe "#set_default_status" do
   end
 
   describe "#to_s" do
-
   end
-
 end
