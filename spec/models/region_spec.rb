@@ -5,35 +5,17 @@ RSpec.describe Region, type: :model do
   let(:region) { Region.new(name: "FAKE")}
 
   describe "attributes" do 
-
-    it "has a name" do 
-      expect(region).to respond_to :name
-    end
-
+    it { should respond_to :name }
   end
 
   describe "associations" do 
-
-    it "can have many tickets" do
-      expect(region).to have_many :tickets
-    end
-
+    it { should have_many :tickets}
   end
 
   describe "validations" do 
-
-    it "validates presence of name" do
-      expect(region).to validate_presence_of :name
-    end
-
-    it "validates the length of name" do
-      expect(region).to validate_length_of(:name).is_at_least(1).is_at_most(255).on(:create)
-    end
-
-    it "validates uniqueness of name" do 
-      expect(region).to validate_uniqueness_of(:name).case_insensitive
-    end
-
+    it { should validate_presence_of :name }
+    it { should validate_length_of(:name).is_at_least(1).is_at_most(255).on(:create) }
+    it { should validate_uniqueness_of(:name).case_insensitive }
   end
 
   describe "#to_s" do
@@ -65,8 +47,5 @@ RSpec.describe Region, type: :model do
     end
 
   end
-
- 
-
 
 end
