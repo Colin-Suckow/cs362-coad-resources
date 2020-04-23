@@ -1,5 +1,4 @@
 class User < ApplicationRecord
-
   enum role: [:admin, :organization]
   after_initialize :set_default_role, :if => :new_record?
 
@@ -24,5 +23,4 @@ class User < ApplicationRecord
   def to_s
     email
   end
-
 end
