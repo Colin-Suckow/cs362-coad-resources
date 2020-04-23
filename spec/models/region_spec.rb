@@ -13,7 +13,7 @@ RSpec.describe Region, type: :model do
         expect(Region.new).to respond_to :name
     end
 
-    it "can be coverted to a string" do 
+    it "can be converted to a string" do 
         region = Region.new
         region.name = "central oregon"
         expect(region.to_s).to be_instance_of String
