@@ -4,30 +4,18 @@ RSpec.describe Region, type: :model do
     
   let(:region) { Region.new(name: "FAKE")}
 
-  describe "associations" do 
-
-    it "can have many tickets" do
-      expect(region).to have_many :tickets
-    end
-
-  end
-    
   describe "attributes" do 
 
-    it "can have a name" do 
+    it "has a name" do 
       expect(region).to respond_to :name
     end
 
   end
 
-  describe "to_s" do
+  describe "associations" do 
 
-    it "returns a string" do 
-      expect(region.to_s).to be_instance_of String
-    end
-
-    it "returns its name" do 
-      expect(region.to_s).to eq "FAKE"
+    it "can have many tickets" do
+      expect(region).to have_many :tickets
     end
 
   end
@@ -47,6 +35,38 @@ RSpec.describe Region, type: :model do
     end
 
   end
+
+  describe "#to_s" do
+
+    it "returns a string" do 
+      expect(region.to_s).to be_instance_of String
+    end
+
+    it "returns its name" do 
+      expect(region.to_s).to eq "FAKE"
+    end
+
+  end
+
+  describe "::unspecified" do 
+
+    it "creates a Region with name 'Unspecified' if non exist" do
+      expect(Region.where(name: 'Unspecified')).to be_empty
+      expect{ Region.unspecified }.to change { Region.count }.by 1
+    end
+
+    it "dosen't create a new Region if a Region exists with name 'Unspecified'" do
+      Region.create(name:'Unspecified')
+      expect{ Region.unspecified }.to_not change { Region.count }
+    end
+
+    it "returns a Region with the name 'Unspecified'" do 
+      expect(Region.unspecified.to_s).to eq 'Unspecified'
+    end
+
+  end
+
+ 
 
 
 end
