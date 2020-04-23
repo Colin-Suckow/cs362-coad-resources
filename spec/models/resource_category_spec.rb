@@ -66,14 +66,12 @@ RSpec.describe ResourceCategory, type: :model do
   end
 
   describe "#to_s" do
-
-    it "returns a string" do 
+    it "returns a string" do
       expect(resource_category.to_s).to be_instance_of String
     end
 
-    it "returns its name" do 
+    it "returns its name" do
       expect(resource_category.to_s).to eq "FAKE"
     end
-
   end
 end
