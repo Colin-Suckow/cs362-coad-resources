@@ -37,7 +37,7 @@ RSpec.describe ResourceCategory, type: :model do
 
   describe "#activate" do
     it "can activate" do
-      category = ResourceCategory.new
+      category = resource_category
       category.activate
       expect(category.active).to be_truthy
     end
@@ -45,7 +45,7 @@ RSpec.describe ResourceCategory, type: :model do
 
   describe "#deactivate" do
     it "can deactivate" do
-      category = ResourceCategory.new
+      category = resource_category
       category.deactivate
       expect(category.active).to be_falsey
     end
