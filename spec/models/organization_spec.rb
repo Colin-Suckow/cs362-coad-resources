@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.describe Organization, type: :model do
-
   let(:organization) { Organization.new }
 
   describe "attributes" do
@@ -50,11 +49,20 @@ RSpec.describe Organization, type: :model do
 
   describe "#reject" do
     it "will set status to rejected" do
-        expect { organization.reject }.to change { organization.status }.to "rejected"
-      end
+      expect { organization.reject }.to change { organization.status }.to "rejected"
+    end
   end
 
   describe "#set_default_status" do
+    it "will set status to submitted it has not been set" do
+      organization.status = nil
+      expect { organization.set_default_status }.to change { organization.status }.to "submitted"
+    end
+
+    it "will not change status if it has been set" do
+      organization.status = :approved
+      expect { organization.set_default_status }.to_not change { organization.status }
+    end
   end
 
   describe "#to_s" do
