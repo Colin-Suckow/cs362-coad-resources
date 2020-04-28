@@ -32,15 +32,31 @@ RSpec.describe Ticket, type: :model do
   end
 
   describe "scopes" do 
+    let(:open_ticket) { Ticket.create(
+      name: "foo", 
+      phone:"+61 412 345 678", 
+      region_id: Region.create(name:"joe").id,
+      resource_category_id: ResourceCategory.create(name:"poe").id,
+      closed: false,
+      organization_id: nil
+      )}
+
+    let(:closed_ticket) { Ticket.create(
+      name: "foo", 
+      phone:"+61 412 345 678", 
+      region_id: Region.create(name:"joe").id,
+      resource_category_id: ResourceCategory.create(name:"poe").id,
+      closed: true
+      )}
+
     it "should return all tickets that are not closed when open is calls" do
-      region = Region.create(name:"joe")
-      resource_category = ResourceCategory.create(name:"poe")
-      open_ticket = Ticket.create(closed: false, organization_id: nil,
-        name: "foo",phone:"+61 412 345 678", region_id: region.id,resource_category_id: resource_category.id)
-      Ticket.create(closed: true,name: "foo",
-        phone:"+61 412 345 678", region_id: region.id,resource_category_id: resource_category.id)
       expect(Ticket.open).to include open_ticket
     end
+
+    it "should return all tickets that are closed when closed is called" do 
+      expect(Ticket.closed).to include closed_ticket
+    end
+
   end
 
   describe "#open?" do
