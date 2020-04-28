@@ -37,31 +37,27 @@ RSpec.describe ResourceCategory, type: :model do
 
   describe "#activate" do
     it "can activate" do
-      category = resource_category
-      category.activate
-      expect(category.active).to be_truthy
+      resource_category.activate
+      expect(resource_category.active).to be_truthy
     end
   end
 
   describe "#deactivate" do
     it "can deactivate" do
-      category = resource_category
-      category.deactivate
-      expect(category.active).to be_falsey
+      resource_category.deactivate
+      expect(resource_category.active).to be_falsey
     end
   end
 
   describe "#inactive?" do
     it "returns false if active" do
-      category = resource_category
-      category.activate
-      expect(category.inactive?).to be_falsey
+      resource_category.activate
+      expect(resource_category.inactive?).to be_falsey
     end
 
     it "returns true if inactive" do
-      category = resource_category
-      category.deactivate
-      expect(category.inactive?).to be_truthy
+      resource_category.deactivate
+      expect(resource_category.inactive?).to be_truthy
     end
   end
 

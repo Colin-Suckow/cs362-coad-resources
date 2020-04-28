@@ -28,13 +28,11 @@ RSpec.describe User, type: :model do
 
   describe "#set_default_role" do
     it "sets role to :organization" do
-      user = User.new
       user.role = nil
       expect { user.set_default_role }.to change { user.role }.to "organization"
     end
 
     it "does not change existing role" do
-      user = User.new
       user.role = :admin
       expect { user.set_default_role }.not_to change { user.role }
     end
