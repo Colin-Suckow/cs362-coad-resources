@@ -31,6 +31,18 @@ RSpec.describe Ticket, type: :model do
     it { should_not allow_value("not a phone number").for :phone }
   end
 
+  describe "scopes" do 
+    it "should return all tickets that are not closed when open is calls" do
+      region = Region.create(name:"joe")
+      resource_category = ResourceCategory.create(name:"poe")
+      open_ticket = Ticket.create(closed: false, organization_id: nil,
+        name: "foo",phone:"+61 412 345 678", region_id: region.id,resource_category_id: resource_category.id)
+      Ticket.create(closed: true,name: "foo",
+        phone:"+61 412 345 678", region_id: region.id,resource_category_id: resource_category.id)
+      expect(Ticket.open).to include open_ticket
+    end
+  end
+
   describe "#open?" do
     it "should be open when it is not closed" do
       expect(ticket.open?).to_not eq ticket.closed
