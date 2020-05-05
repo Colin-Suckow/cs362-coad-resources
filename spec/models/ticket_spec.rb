@@ -71,7 +71,13 @@ RSpec.describe Ticket, type: :model do
         expect(Ticket.closed_organization(open_ticket_with_org.organization_id)).to_not include open_ticket, closed_ticket, open_ticket_with_org
       end
     end
-    
+
+    describe "::region" do 
+      it "will return tickets that have a given region id" do
+        expect(Ticket.region(open_ticket.region_id)).to include open_ticket
+        expect(Ticket.region(open_ticket.region_id)).to_not include closed_ticket, open_ticket_with_org, closed_ticket_with_org
+      end  
+    end
   end
 
   describe "#open?" do
