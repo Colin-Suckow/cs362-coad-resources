@@ -34,23 +34,22 @@ RSpec.describe Ticket, type: :model do
   describe "scopes" do
     let(:open_ticket) { create(:ticket, closed: false) }
     let(:closed_ticket) { create(:ticket, closed: true) }
-    let(:open_ticket_with_org) { create(:ticket, closed: false, organization:create(:organization)) }
-    let(:closed_ticket_with_org) { create(:ticket, closed: true, organization:create(:organization)) }
+    let(:open_ticket_with_org) { create(:ticket, closed: false, organization: create(:organization)) }
+    let(:closed_ticket_with_org) { create(:ticket, closed: true, organization: create(:organization)) }
 
     describe "::open" do
       it "will return all tickets that are not closed and have no organization" do
         expect(Ticket.open).to include open_ticket
-        expect(Ticket.open).to_not include closed_ticket,open_ticket_with_org,closed_ticket_with_org
+        expect(Ticket.open).to_not include closed_ticket, open_ticket_with_org, closed_ticket_with_org
       end
     end
 
     describe "::closed" do
       it "will return all tickets that are closed" do
-        expect(Ticket.closed).to include closed_ticket,closed_ticket_with_org
-        expect(Ticket.closed).to_not include open_ticket,open_ticket_with_org
+        expect(Ticket.closed).to include closed_ticket, closed_ticket_with_org
+        expect(Ticket.closed).to_not include open_ticket, open_ticket_with_org
       end
     end
-
   end
 
   describe "#open?" do
