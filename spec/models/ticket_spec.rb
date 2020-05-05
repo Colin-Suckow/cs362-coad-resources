@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Ticket, type: :model do
-  let(:ticket) { Ticket.new() }
+  let(:ticket) { build(:ticket) }
 
   describe "attributes" do
     it { should respond_to :name }
@@ -32,28 +32,14 @@ RSpec.describe Ticket, type: :model do
   end
 
   describe "scopes" do 
-    let(:open_ticket) { Ticket.create(
-      name: "foo", 
-      phone:"+61 412 345 678", 
-      region_id: Region.create(name:"joe").id,
-      resource_category_id: ResourceCategory.create(name:"poe").id,
-      closed: false,
-      organization_id: nil
-      )}
 
-    let(:closed_ticket) { Ticket.create(
-      name: "foo", 
-      phone:"+61 412 345 678", 
-      region_id: Region.create(name:"joe").id,
-      resource_category_id: ResourceCategory.create(name:"poe").id,
-      closed: true
-      )}
-
-    it "should return all tickets that are not closed when open is calls" do
+    it "should return all tickets that are not closed when open is called" do
+      open_ticket = create(:ticket, closed:false)
       expect(Ticket.open).to include open_ticket
     end
 
-    it "should return all tickets that are closed when closed is called" do 
+    it "should return all tickets that are closed when closed is called" do
+      closed_ticket = create(:ticket,closed:true) 
       expect(Ticket.closed).to include closed_ticket
     end
 
