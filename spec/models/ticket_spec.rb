@@ -34,29 +34,44 @@ RSpec.describe Ticket, type: :model do
   describe "scopes" do
     let(:open_ticket) { create(:ticket, closed: false) }
     let(:closed_ticket) { create(:ticket, closed: true) }
-    let(:open_ticket_with_org) { create(:ticket, closed: false, organization:create(:organization)) }
-    let(:closed_ticket_with_org) { create(:ticket, closed: true, organization:create(:organization)) }
+    let(:open_ticket_with_org) { create(:ticket, closed: false, organization: create(:organization)) }
+    let(:closed_ticket_with_org) { create(:ticket, closed: true, organization: create(:organization)) }
 
     describe "::open" do
       it "will return all tickets that are not closed and have no organization" do
         expect(Ticket.open).to include open_ticket
-        expect(Ticket.open).to_not include closed_ticket,open_ticket_with_org,closed_ticket_with_org
+        expect(Ticket.open).to_not include closed_ticket, open_ticket_with_org, closed_ticket_with_org
       end
     end
 
     describe "::closed" do
       it "will return all tickets that are closed" do
-        expect(Ticket.closed).to include closed_ticket,closed_ticket_with_org
-        expect(Ticket.closed).to_not include open_ticket,open_ticket_with_org
+        expect(Ticket.closed).to include closed_ticket, closed_ticket_with_org
+        expect(Ticket.closed).to_not include open_ticket, open_ticket_with_org
       end
     end
 
-    describe "::all_organization" do 
-      it "will return all tickets that are open and have an organization" do 
+    describe "::all_organization" do
+      it "will return all tickets that are open and have an organization" do
         expect(Ticket.all_organization).to include open_ticket_with_org
-        expect(Ticket.all_organization).to_not include open_ticket,closed_ticket,closed_ticket_with_org
+        expect(Ticket.all_organization).to_not include open_ticket, closed_ticket, closed_ticket_with_org
       end
     end
+
+    describe "::organization" do
+      it "will return open tickets that have a given organization id" do
+        expect(Ticket.organization(open_ticket_with_org.organization_id)).to include open_ticket_with_org
+        expect(Ticket.organization(open_ticket_with_org.organization_id)).to_not include open_ticket, closed_ticket, closed_ticket_with_org
+      end
+    end
+
+    describe "::closed_organization" do
+      it "will return closed tickets that have a given organization id" do
+        expect(Ticket.closed_organization(closed_ticket_with_org.organization_id)).to include closed_ticket_with_org
+        expect(Ticket.closed_organization(open_ticket_with_org.organization_id)).to_not include open_ticket, closed_ticket, open_ticket_with_org
+      end
+    end
+    
   end
 
   describe "#open?" do
