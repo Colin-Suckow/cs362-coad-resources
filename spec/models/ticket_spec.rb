@@ -85,7 +85,6 @@ RSpec.describe Ticket, type: :model do
         expect(Ticket.resource_category(open_ticket.resource_category)).to_not include closed_ticket, open_ticket_with_org, closed_ticket_with_org
       end
     end
-
   end
 
   describe "#open?" do

@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe ResourceCategory, type: :model do
-  let(:resource_category) { ResourceCategory.new(name: "FAKE") }
+  let(:resource_category) { build(:resource_category) }
 
   describe "attributes" do
     it { should respond_to :name }
@@ -67,7 +67,7 @@ RSpec.describe ResourceCategory, type: :model do
     end
 
     it "returns its name" do
-      expect(resource_category.to_s).to eq "FAKE"
+      expect(build(:resource_category,name: "FAKE").to_s).to eq "FAKE"
     end
   end
 end

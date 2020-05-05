@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Region, type: :model do
-  let(:region) { Region.new(name: "FAKE") }
+  let(:region) { build(:region) }
 
   describe "attributes" do
     it { should respond_to :name }

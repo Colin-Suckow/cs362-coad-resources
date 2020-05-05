@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe User, type: :model do
-  let(:user) { User.new(email: "test_email@suckow.dev") }
+  let(:user) { build(:user) }
 
   describe "attributes" do
     it { should respond_to :email }
@@ -45,7 +45,7 @@ RSpec.describe User, type: :model do
       end
 
       it "returns its email" do
-        expect(user.to_s).to eq "test_email@suckow.dev"
+        expect(build(:user,email:"test_email@suckow.dev").to_s).to eq "test_email@suckow.dev"
       end
     end
   end
