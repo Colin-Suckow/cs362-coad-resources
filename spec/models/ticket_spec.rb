@@ -17,7 +17,7 @@ RSpec.describe Ticket, type: :model do
   describe "associations" do
     it { should belong_to :region }
     it { should belong_to :resource_category }
-    it { should belong_to(:organization).optional } 
+    it { should belong_to(:organization).optional }
   end
 
   describe "validations" do
@@ -31,16 +31,24 @@ RSpec.describe Ticket, type: :model do
     it { should_not allow_value("not a phone number").for :phone }
   end
 
-  describe "scopes" do 
+  describe "scopes" do
+    let(:open_ticket) { create(:ticket, closed: false) }
+    let(:closed_ticket) { create(:ticket, closed: true) }
+    let(:open_ticket_with_org) { create(:ticket, closed: false, organization:create(:organization)) }
+    let(:closed_ticket_with_org) { create(:ticket, closed: true, organization:create(:organization)) }
 
-    it "should return all tickets that are not closed when open is called" do
-      open_ticket = create(:ticket, closed:false)
-      expect(Ticket.open).to include open_ticket
+    describe "::open" do
+      it "will return all tickets that are not closed and have no organization" do
+        expect(Ticket.open).to include open_ticket
+        expect(Ticket.open).to_not include closed_ticket,open_ticket_with_org,closed_ticket_with_org
+      end
     end
 
-    it "should return all tickets that are closed when closed is called" do
-      closed_ticket = create(:ticket,closed:true) 
-      expect(Ticket.closed).to include closed_ticket
+    describe "::closed" do
+      it "will return all tickets that are closed" do
+        expect(Ticket.closed).to include closed_ticket,closed_ticket_with_org
+        expect(Ticket.closed).to_not include open_ticket,open_ticket_with_org
+      end
     end
 
   end
