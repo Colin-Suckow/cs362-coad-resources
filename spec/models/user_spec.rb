@@ -45,7 +45,7 @@ RSpec.describe User, type: :model do
       end
 
       it "returns its email" do
-        expect(build(:user,email:"test_email@suckow.dev").to_s).to eq "test_email@suckow.dev"
+        expect(build(:user, email: "test_email@suckow.dev").to_s).to eq "test_email@suckow.dev"
       end
     end
   end
