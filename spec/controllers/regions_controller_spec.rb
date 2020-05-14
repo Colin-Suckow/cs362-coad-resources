@@ -51,7 +51,7 @@ RSpec.describe RegionsController, type: :controller do
     describe "#new" do
       specify { expect(get(:new)).to redirect_to(dashboard_path) }
     end
-    
+
     describe "#edit" do
       specify { expect(get(:edit, params: { :id => 1 })).to redirect_to(dashboard_path) }
     end
@@ -63,12 +63,11 @@ RSpec.describe RegionsController, type: :controller do
     describe "#destroy" do
       specify { expect(get(:destroy, params: { :id => 1 })).to redirect_to(dashboard_path) }
     end
-
   end
 
   context "as an admin" do
     let (:admin_user) { create(:user, role: "admin") }
-
+    let (:region) { create(:region) }
     before(:each) do
       admin_user.confirm
       sign_in(admin_user)
@@ -77,5 +76,29 @@ RSpec.describe RegionsController, type: :controller do
     describe "#index" do
       specify { expect(get(:index)).to be_successful }
     end
+
+    describe "#show" do
+      specify { expect(get(:show, params: { :id => region.id })).to be_successful }
+    end
+
+    describe "#new" do
+      specify { expect(get(:new, params: { :id => region.id })).to be_successful }
+    end
+
+    describe "#edit" do
+      specify { expect(get(:edit, params: { :id => region.id })).to be_successful }
+    end
+
+    describe "#update" do
+      it "does stuff again" do 
+        
+        expect(put(:update, params: { :id => region.id, region: attributes_for(:region) })).to redirect_to(region_path)
+      end
+    end
+
+    describe "#destroy" do
+      specify { expect(delete(:destroy, params: { :id => region.id })).to redirect_to(regions_path) }
+    end
   end
 end
+
