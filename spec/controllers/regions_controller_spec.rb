@@ -90,7 +90,7 @@ RSpec.describe RegionsController, type: :controller do
     end
 
     describe "#create" do
-      specify { expect(get(:create, params: { :id => region.id, region: attributes_for(:region) })).to redirect_to(regions_path)}
+      specify { expect(get(:create, params: { :id => region.id, region: attributes_for(:region) })).to redirect_to(regions_path) }
     end
 
     describe "#edit" do
