@@ -37,12 +37,12 @@ RSpec.describe TicketsController, type: :controller do
     end
   end
 
-  context "as an organization" do
-    let (:organization_user) { create(:user, role: "organization") }
+  context "as an unapproved organization" do
+    let (:unapproved_organization_user) { create(:user, role: "organization") }
 
     before(:each) do
-      organization_user.confirm
-      sign_in(organization_user)
+      unapproved_organization_user.confirm
+      sign_in(unapproved_organization_user)
     end
 
     describe "#new" do
@@ -67,6 +67,42 @@ RSpec.describe TicketsController, type: :controller do
 
     describe "#close" do
       specify { expect(get(:close, params: { id: ticket.id })).to redirect_to(dashboard_path) }
+    end
+
+    describe "#destroy" do
+      specify { expect(get(:destroy, params: { id: ticket.id })).to redirect_to(dashboard_path) }
+    end
+  end
+
+  context "as an approved organization" do
+    let (:approved_organization_user) { create(:user, role: "organization", organization: create(:organization, status: :approved)) }
+    before(:each) do
+      approved_organization_user.confirm
+      sign_in(approved_organization_user)
+    end
+
+    describe "#new" do
+      specify { expect(get(:new)).to be_successful }
+    end
+
+    describe "#create" do
+      specify { expect(get(:create, params: { ticket: attributes_for(:ticket) })).to be_successful }
+    end
+
+    describe "#show" do
+      specify { expect(get(:show, params: { id: ticket.id })).to be_successful }
+    end
+
+    describe "#capture" do
+      specify { expect(get(:capture, params: { id: ticket.id })).to redirect_to(dashboard_path + "#tickets:open") }
+    end
+
+    describe "#release" do
+      specify { expect(get(:release, params: { id: ticket.id })).to be_successful }
+    end
+
+    describe "#close" do
+      specify { expect(get(:close, params: { id: ticket.id })).to be_successful }
     end
 
     describe "#destroy" do
@@ -102,11 +138,11 @@ RSpec.describe TicketsController, type: :controller do
     end
 
     describe "#close" do
-      specify { expect(get(:close, params: { id: ticket.id })).to redirect_to(dashboard_path+"#tickets:open") }
+      specify { expect(get(:close, params: { id: ticket.id })).to redirect_to(dashboard_path + "#tickets:open") }
     end
 
     describe "#destroy" do
-      specify { expect(get(:destroy, params: { id: ticket.id })).to redirect_to(dashboard_path+"#tickets") }
+      specify { expect(get(:destroy, params: { id: ticket.id })).to redirect_to(dashboard_path + "#tickets") }
     end
   end
 end
