@@ -109,6 +109,30 @@ RSpec.describe TicketsController, type: :controller do
       specify { expect(get(:destroy, params: { id: ticket.id })).to redirect_to(dashboard_path) }
     end
   end
+
+  context "as an approved organization with corresponding org id with ticket" do
+    let (:organization) { create(:organization, status: :approved) }
+    let (:ticket_with_same_org) { create(:ticket, organization: organization) }
+    let (:approved_organization_user_with_same_org) { create(:user, role: "organization", organization: organization) }
+
+    before(:each) do
+      approved_organization_user_with_same_org.confirm
+      sign_in(approved_organization_user_with_same_org)
+    end
+
+    describe "#capture" do
+      specify { expect(get(:capture, params: { id: ticket_with_same_org.id })).to be_successful }
+    end
+
+    describe "#release" do
+      specify { expect(get(:release, params: { id: ticket_with_same_org.id })).to redirect_to(dashboard_path+"#tickets:organization") }
+    end
+
+    describe "#close" do
+      specify { expect(get(:close, params: { id: ticket_with_same_org.id })).to redirect_to(dashboard_path+"#tickets:organization") }
+    end
+  end
+
   context "as an admin" do
     let (:admin_user) { create(:user, role: "admin") }
 
