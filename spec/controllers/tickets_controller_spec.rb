@@ -36,4 +36,41 @@ RSpec.describe TicketsController, type: :controller do
       specify { expect(get(:destroy, params: { id: ticket.id })).to redirect_to(new_user_session_path) }
     end
   end
+
+  context "as an organization" do
+    let (:organization_user) { create(:user, role: "organization") }
+
+    before(:each) do
+      organization_user.confirm
+      sign_in(organization_user)
+    end
+
+    describe "#new" do
+      specify { expect(get(:new)).to be_successful }
+    end
+
+    describe "#create" do
+      specify { expect(get(:create, params: { ticket: attributes_for(:ticket) })).to be_successful }
+    end
+
+    describe "#show" do
+      specify { expect(get(:show, params: { id: ticket.id })).to redirect_to(dashboard_path) }
+    end
+
+    describe "#capture" do
+      specify { expect(get(:capture, params: { id: ticket.id })).to redirect_to(dashboard_path) }
+    end
+
+    describe "#release" do
+      specify { expect(get(:release, params: { id: ticket.id })).to redirect_to(dashboard_path) }
+    end
+
+    describe "#close" do
+      specify { expect(get(:close, params: { id: ticket.id })).to redirect_to(dashboard_path) }
+    end
+
+    describe "#destroy" do
+      specify { expect(get(:destroy, params: { id: ticket.id })).to redirect_to(dashboard_path) }
+    end
+  end
 end
