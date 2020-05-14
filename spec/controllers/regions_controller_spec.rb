@@ -52,6 +52,10 @@ RSpec.describe RegionsController, type: :controller do
       specify { expect(get(:new)).to redirect_to(dashboard_path) }
     end
 
+    describe "#create" do
+      specify { expect(get(:create, params: { :id => 1 })).to redirect_to(new_user_session_path) }
+    end
+
     describe "#edit" do
       specify { expect(get(:edit, params: { :id => 1 })).to redirect_to(dashboard_path) }
     end
@@ -85,15 +89,16 @@ RSpec.describe RegionsController, type: :controller do
       specify { expect(get(:new, params: { :id => region.id })).to be_successful }
     end
 
+    describe "#create" do
+      specify { expect(get(:create, params: { :id => 1 })).to redirect_to(new_user_session_path) }
+    end
+
     describe "#edit" do
       specify { expect(get(:edit, params: { :id => region.id })).to be_successful }
     end
 
     describe "#update" do
-      it "does stuff again" do 
-        
-        expect(put(:update, params: { :id => region.id, region: attributes_for(:region) })).to redirect_to(region_path)
-      end
+      specify { expect(put(:update, params: { :id => region.id, region: attributes_for(:region) })).to redirect_to(region_path) }
     end
 
     describe "#destroy" do
@@ -101,4 +106,3 @@ RSpec.describe RegionsController, type: :controller do
     end
   end
 end
-
