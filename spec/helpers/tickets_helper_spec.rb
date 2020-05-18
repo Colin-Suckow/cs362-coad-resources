@@ -12,4 +12,12 @@ require 'rails_helper'
 # end
 RSpec.describe TicketsHelper, type: :helper do
 
+    describe "format_phone_number" do 
+        it "adds US country code to the phone number and removes number seperaters" do 
+            expect(format_phone_number("541-123-4567")).to eq("+15411234567")
+        end
+        it "returns nil if the number is not valid" do 
+            expect(format_phone_number("bad number")).to be_nil
+        end
+    end
 end
