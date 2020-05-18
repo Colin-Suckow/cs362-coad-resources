@@ -32,8 +32,8 @@ RSpec.describe OrganizationsController, type: :controller do
   end
 
   context "as an organization" do
-    let (:organization_user) { create(:user,role: "organization") }
-    let (:admin_user) {create(:user,role: "admin")}
+    let (:organization_user) { create(:user, role: "organization") }
+    let (:admin_user) { create(:user, role: "admin") }
 
     before(:each) do
       organization_user.confirm
@@ -50,7 +50,7 @@ RSpec.describe OrganizationsController, type: :controller do
     end
 
     describe "#create" do
-      specify { expect(get(:create,params: { organization: attributes_for(:organization) })).to redirect_to(organization_application_submitted_path) }
+      specify { expect(get(:create, params: { organization: attributes_for(:organization) })).to redirect_to(organization_application_submitted_path) }
     end
 
     describe "#update" do
@@ -67,7 +67,7 @@ RSpec.describe OrganizationsController, type: :controller do
   end
 
   context "as an admin" do
-    let (:admin_user) {create(:user,role: "admin")}
+    let (:admin_user) { create(:user, role: "admin") }
 
     before(:each) do
       admin_user.confirm
@@ -83,7 +83,7 @@ RSpec.describe OrganizationsController, type: :controller do
     end
 
     describe "#create" do
-      specify { expect(get(:create,params: { organization: attributes_for(:organization) })).to redirect_to(dashboard_path) }
+      specify { expect(get(:create, params: { organization: attributes_for(:organization) })).to redirect_to(dashboard_path) }
     end
 
     describe "#update" do
@@ -97,7 +97,5 @@ RSpec.describe OrganizationsController, type: :controller do
     describe "#reject" do
       specify { expect(get(:reject, params: { organization: attributes_for(:organization), id: organization.id })).to redirect_to(organizations_path) }
     end
-    
   end
-
 end
