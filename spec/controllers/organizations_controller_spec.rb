@@ -27,7 +27,7 @@ RSpec.describe OrganizationsController, type: :controller do
     end
 
     describe "#reject" do
-      specify { expect(get(:approve, params: { id: organization.id })).to redirect_to(new_user_session_path) }
+      specify { expect(get(:reject, params: { id: organization.id })).to redirect_to(new_user_session_path) }
     end
   end
 
@@ -62,11 +62,11 @@ RSpec.describe OrganizationsController, type: :controller do
     end
 
     describe "#reject" do
-      specify { expect(get(:approve, params: { id: organization.id })).to redirect_to(dashboard_path) }
+      specify { expect(get(:reject, params: { id: organization.id })).to redirect_to(dashboard_path) }
     end
   end
 
-  context "as an organization" do
+  context "as an admin" do
     let (:admin_user) {create(:user,role: "admin")}
 
     before(:each) do
@@ -95,8 +95,9 @@ RSpec.describe OrganizationsController, type: :controller do
     end
 
     describe "#reject" do
-      specify { expect(get(:approve, params: { id: organization.id })).to redirect_to(organizations_path) }
+      specify { expect(get(:reject, params: { organization: attributes_for(:organization), id: organization.id })).to redirect_to(organizations_path) }
     end
+    
   end
 
 end
