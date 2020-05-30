@@ -32,4 +32,17 @@ RSpec.describe "Logging in", type: :feature do
       end
     end
   end
+
+  context "as an admin" do 
+    let(:admin) { create(:user, role: "admin") }
+    before (:each) { admin.confirm }
+
+    it "will display the admin dashbord" do 
+      visit login_path
+      fill_in "user_email", with: admin.email
+      fill_in "user_password", with: admin.password
+      click_on "commit"
+      expect(page).to have_content("Dashboard")
+    end
+  end
 end
