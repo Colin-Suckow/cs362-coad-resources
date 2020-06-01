@@ -104,5 +104,13 @@ RSpec.describe ResourceCategoriesController, type: :controller do
     describe "#destroy" do
       specify { expect(delete(:destroy, params: { :id => resource_category.id })).to redirect_to(resource_categories_path) }
     end
+
+    describe "#activate" do
+      specify { expect(get(:activate, params: { :id => resource_category.id })).to redirect_to(resource_category_path) }
+    end
+
+    describe "#deactivate" do
+      specify { expect(get(:deactivate, params: { :id => resource_category.id })).to redirect_to(resource_category_path) }
+    end
   end
 end
