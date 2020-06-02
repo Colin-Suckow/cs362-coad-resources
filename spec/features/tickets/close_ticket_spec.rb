@@ -25,7 +25,7 @@ RSpec.describe "Closing a ticket", type: :feature do
       print page.html
       click_on "Close"
 
-      expect(!ticket.open?)
+      expect(page).to have_content("Dashboard") #Check that the user was sent back to the dashboard
     end
   end
 end
