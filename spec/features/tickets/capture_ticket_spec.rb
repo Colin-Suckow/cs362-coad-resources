@@ -22,7 +22,7 @@ RSpec.describe "Capturing a ticket", type: :feature do
       click_on ticket.name
       click_on "Capture"
 
-      expect(ticket.captured?)
+      expect(page).to have_content("Dashboard") #Check that the user was sent back to the dashboard
     end
   end
 end
